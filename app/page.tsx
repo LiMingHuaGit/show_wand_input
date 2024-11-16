@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import { MagicAnimation } from "./components/MagicAnimation";
+import { FaGithub } from 'react-icons/fa';
 
 export default function Home() {
   const [magics, setMagics] = useState<string[]>([]);
@@ -103,6 +104,16 @@ export default function Home() {
       >
         {currentInput}
       </div>
+
+      <a 
+        href="https://github.com/LiMingHuaGit/show_wand_input"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute top-8 right-8 text-3xl hover:text-gray-900 dark:text-white dark:hover:text-gray-200 transition-colors z-50"
+        aria-label="GitHub repository"
+      >
+        <FaGithub />
+      </a>
     </div>
   );
 }
