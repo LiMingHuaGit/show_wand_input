@@ -1,7 +1,8 @@
 'use client'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MagicAnimation } from "./components/MagicAnimation";
 import { FaGithub } from 'react-icons/fa';
+import { FireballAnimation } from "./components/FireballAnimation";
 
 export default function Home() {
   const [magics, setMagics] = useState<string[]>([]);
@@ -11,6 +12,8 @@ export default function Home() {
   const [animationKey, setAnimationKey] = useState(0);
   const [isLight, setIsLight] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
+  const [showFireball, setShowFireball] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -27,6 +30,14 @@ export default function Home() {
             setTimeout(() => {
               setIsLight(false);
               setShowAnimation(false);
+              setHasFirstInput(false);
+            }, 10000);
+          } else if (currentInput.toLowerCase().includes('horn')) {
+            setShowFireball(true);
+            setHasFirstInput(true);
+            
+            setTimeout(() => {
+              setShowFireball(false);
               setHasFirstInput(false);
             }, 10000);
           } else {
@@ -54,6 +65,12 @@ export default function Home() {
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [currentInput, hasFirstInput]);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [magics]);
 
   return (
     <div className={`min-h-screen flex flex-col items-center transition-colors duration-1000 relative
@@ -85,8 +102,13 @@ export default function Home() {
         />
       )}
 
-      <div className={`fixed left-8 bottom-24 w-1/5 max-h-[33vh] overflow-y-auto space-y-4 
-        scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent`}>
+      {showFireball && <FireballAnimation />}
+
+      <div 
+        ref={scrollRef}
+        className={`fixed left-8 bottom-24 w-1/5 max-h-[33vh] overflow-y-auto space-y-4 
+          scrollbar-none`}
+      >
         {magics.map((magic, index) => (
           <div 
             key={index}
