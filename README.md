@@ -1,6 +1,12 @@
-## 目前只有两个动画
+## 目前加入的动画
 upanddown 开关灯
-fireball 火球
+horn 火球
+book 书
+cup 杯子蓄水
+feizei 金色飞贼
+grow 树苗长大
+mofazhen 魔法阵转动
+saoba 扫帚扫地
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
